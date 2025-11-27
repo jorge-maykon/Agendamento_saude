@@ -126,3 +126,116 @@
   font-size: 0.8rem;
   color: #b91c1c;
 }
+
+/* ======= DASHBOARD ======= */
+
+.dashboard-page {
+  min-height: 100vh;
+  color: #e2e8f0;
+  padding: 1.5rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem 0;
+}
+
+.dashboard-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+
+.dashboard-date {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: #0f172a;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+.dashboard-date span {
+  display: block;
+  color: #94a3b8;
+}
+
+.dashboard-date strong {
+  display: block;
+  color: #e2e8f0;
+  margin-top: 0.15rem;
+}
+
+/* AÇÕES RÁPIDAS */
+
+.dashboard-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.dash-btn {
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 999px;
+  padding: 0.55rem 1.3rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.dash-btn.primary {
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  border-color: transparent;
+}
+
+.dash-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.4);
+}
+
+/* CARDS */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.dash-card {
+  background: #020617;
+  border-radius: 1rem;
+  padding: 1.1rem 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.dash-card h2 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.dash-number {
+  margin: 0.1rem 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #f9fafb;
+}
+
+.dash-caption {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
