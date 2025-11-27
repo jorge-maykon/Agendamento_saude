@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 // Rota padrão: manda pro dashboard
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('login');
 });
 
 // Tela de login (GET)
