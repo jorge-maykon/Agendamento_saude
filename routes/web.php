@@ -25,6 +25,25 @@ Route::post('/login', function (Request $request) {
     return redirect()->route('dashboard');
 })->name('login.perform');
 
+
+
+// Processar login (POST)
+Route::post('/login', function (Request $request) {
+    $request->session()->put('user_email', $request->input('email'));
+    return redirect()->route('dashboard');
+})->name('login.perform');
+
+// Logout (POST)
+Route::post('/logout', function (Request $request) {
+    $request->session()->flush();              // limpa sessão
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect()->route('login');         // volta pra tela de login
+})->name('logout');
+
+
+
 // Dashboard inicial
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
