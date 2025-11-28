@@ -1,7 +1,8 @@
 // resources/js/Pages/Dashboard.tsx
 import React from "react";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import Layout from "@/Components/Layout";
+
 
 export default function Dashboard() {
   const hoje = new Date().toLocaleDateString("pt-BR", {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 // Rota padrão: manda pro dashboard
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('dashboard');
 });
 
 // Tela de login (GET)
@@ -16,35 +16,39 @@ Route::get('/login', function () {
 
 // Processar login (POST)
 Route::post('/login', function (Request $request) {
-    // Aqui você poderia validar email/senha, mas por enquanto
-    // vamos só "fingir" que deu certo e mandar pro dashboard.
-
-    // Se quiser, salva o email na sessão só pra ter um "usuário logado":
+    // Aqui só estamos “fingindo” login, salvando o e-mail na sessão
     $request->session()->put('user_email', $request->input('email'));
 
-    return redirect()->route('dashboard');
-})->name('login.perform');
-
-
-
-// Processar login (POST)
-Route::post('/login', function (Request $request) {
-    $request->session()->put('user_email', $request->input('email'));
     return redirect()->route('dashboard');
 })->name('login.perform');
 
 // Logout (POST)
 Route::post('/logout', function (Request $request) {
-    $request->session()->flush();              // limpa sessão
+    // Limpa tudo da sessão
+    $request->session()->flush();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect()->route('login');         // volta pra tela de login
+    // Volta para a tela de login
+    return redirect()->route('login');
 })->name('logout');
 
-
-
-// Dashboard inicial
+// Dashboard
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+
+// Lista de pacientes (Clientes)
+Route::get('/clientes', function () {
+    return Inertia::render('Clientes/Index');
+})->name('clientes.index');
+
+// Novo agendamento
+Route::get('/agendamentos/novo', function () {
+    return Inertia::render('Agendamentos/Create');
+})->name('agendamentos.create');
+
+// Agenda (calendário)
+Route::get('/agenda', function () {
+    return Inertia::render('Agendamentos/Calendar');
+})->name('agenda.index');
