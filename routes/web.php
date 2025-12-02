@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
-// Rota padrão: manda pro dashboard
+// Rota raiz – pode mandar pra login ou dashboard
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('dashboard'); // se preferir login, troque para 'login'
 });
 
 // Tela de login (GET)
@@ -16,7 +16,7 @@ Route::get('/login', function () {
 
 // Processar login (POST)
 Route::post('/login', function (Request $request) {
-    // Aqui só estamos “fingindo” login, salvando o e-mail na sessão
+    // Guarda o e-mail na sessão (login simples por enquanto)
     $request->session()->put('user_email', $request->input('email'));
 
     return redirect()->route('dashboard');
@@ -24,12 +24,10 @@ Route::post('/login', function (Request $request) {
 
 // Logout (POST)
 Route::post('/logout', function (Request $request) {
-    // Limpa tudo da sessão
     $request->session()->flush();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    // Volta para a tela de login
     return redirect()->route('login');
 })->name('logout');
 
@@ -38,17 +36,36 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-// Lista de pacientes (Clientes)
-Route::get('/clientes', function () {
-    return Inertia::render('Clientes/Index');
-})->name('clientes.index');
+// LISTA DE PACIENTES
+Route::get('/pacientes', function () {
+    $pacientes = [
+        [
+            'id' => 1,
+            'nome' => 'João Silva',
+            'telefone' => '(61) 99999-0001',
+            'documento' => '111.111.111-11',
+        ],
+        [
+            'id' => 2,
+            'nome' => 'Maria Souza',
+            'telefone' => '(61) 98888-0002',
+            'documento' => '222.222.222-22',
+        ],
+        [
+            'id' => 3,
+            'nome' => 'Carlos Pereira',
+            'telefone' => '(61) 97777-0003',
+            'documento' => '333.333.333-33',
+        ],
+    ];
 
-// Novo agendamento
-Route::get('/agendamentos/novo', function () {
-    return Inertia::render('Agendamentos/Create');
-})->name('agendamentos.create');
+    return Inertia::render('Pacientes/Index', [
+        'pacientes' => $pacientes,
+    ]);
+});
 
-// Agenda (calendário)
-Route::get('/agenda', function () {
-    return Inertia::render('Agendamentos/Calendar');
-})->name('agenda.index');
+// FORMULÁRIO DE NOVO PACIENTE
+Route::get('/pacientes/novo', function () {
+    return Inertia::render('Pacientes/Create');
+});
+

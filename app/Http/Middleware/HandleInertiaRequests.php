@@ -41,6 +41,5 @@ class HandleInertiaRequests extends Middleware
             'email' => $request->session()->get('user_email'),
         ],
     ]);
-}
-
+    }
 }

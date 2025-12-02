@@ -1,15 +1,10 @@
-// resources/js/Pages/Dashboard.tsx
-import React from "react";
-import { Head, Link } from "@inertiajs/react";
-import Layout from "@/Components/Layout";
-
+import React from 'react';
+import { Head, Link } from '@inertiajs/react';
+import Layout from '@/Components/Layout';
 
 export default function Dashboard() {
-  const hoje = new Date().toLocaleDateString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  // Data de hoje em formato pt-BR (ex.: 01/12/2025)
+  const hoje = new Date().toLocaleDateString('pt-BR');
 
   return (
     <Layout>
@@ -30,14 +25,23 @@ export default function Dashboard() {
           </div>
         </header>
 
-        {/* AÇÕES RÁPIDAS */}
         <section className="dashboard-quick-actions">
-          <button className="dash-btn primary">Novo agendamento</button>
-          <button className="dash-btn">Ver agenda</button>
-          <button className="dash-btn">Pacientes</button>
+          <button className="dash-btn primary">
+            Novo agendamento
+          </button>
+
+          <button className="dash-btn">
+            Ver agenda
+          </button>
+
+          {/* Link direto para a lista de pacientes */}
+          <Link href="/pacientes" className="dash-btn">
+            Pacientes
+          </Link>
         </section>
 
-        {/* CARDS RESUMO */}
+
+        {/* CARDS RESUMO (por enquanto estáticos) */}
         <section className="dashboard-grid">
           <div className="dash-card">
             <h2>Consultas de hoje</h2>
