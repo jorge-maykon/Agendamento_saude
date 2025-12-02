@@ -1,5 +1,6 @@
 <?php
 
+use App\models\Paciente;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -36,28 +37,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-// LISTA DE PACIENTES
+// LISTA DE PACIENTES – agora vindo do banco
 Route::get('/pacientes', function () {
-    $pacientes = [
-        [
-            'id' => 1,
-            'nome' => 'João Silva',
-            'telefone' => '(61) 99999-0001',
-            'documento' => '111.111.111-11',
-        ],
-        [
-            'id' => 2,
-            'nome' => 'Maria Souza',
-            'telefone' => '(61) 98888-0002',
-            'documento' => '222.222.222-22',
-        ],
-        [
-            'id' => 3,
-            'nome' => 'Carlos Pereira',
-            'telefone' => '(61) 97777-0003',
-            'documento' => '333.333.333-33',
-        ],
-    ];
+    $pacientes = Paciente::orderBy('nome')->get();
 
     return Inertia::render('Pacientes/Index', [
         'pacientes' => $pacientes,
@@ -68,4 +50,14 @@ Route::get('/pacientes', function () {
 Route::get('/pacientes/novo', function () {
     return Inertia::render('Pacientes/Create');
 });
+
+// EDITAR PACIENTE
+Route::get('/pacientes/{id}/editar', function ($id) {
+    $paciente = Paciente::findOrFail($id);
+
+    return Inertia::render('Pacientes/Edit', [
+        'paciente' => $paciente,
+    ]);
+});
+
 

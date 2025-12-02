@@ -48,13 +48,16 @@ export default function PacientesIndex() {
                 <th className="px-4 py-2 text-left text-slate-500 font-medium">
                   Documento
                 </th>
+                <th className="px-4 py-2 text-left text-slate-500 font-medium">
+                  Ações
+                </th>
               </tr>
             </thead>
             <tbody>
               {pacientes.length === 0 && (
                 <tr>
                   <td
-                    colSpan={4}
+                    colSpan={5}
                     className="px-4 py-6 text-center text-slate-500"
                   >
                     Nenhum paciente cadastrado.
@@ -71,6 +74,14 @@ export default function PacientesIndex() {
                   </td>
                   <td className="px-4 py-2 text-slate-700">
                     {paciente.documento}
+                  </td>
+                  <td className="px-4 py-2 text-slate-700">
+                    <Link
+                      href={`/pacientes/${paciente.id}/editar`}
+                      className="text-emerald-700 hover:underline text-xs"
+                    >
+                      Editar
+                    </Link>
                   </td>
                 </tr>
               ))}
