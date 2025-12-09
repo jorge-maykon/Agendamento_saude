@@ -37,7 +37,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-// LISTA DE PACIENTES – banco
+// LISTA DE PACIENTES
 Route::get('/pacientes', function () {
     $pacientes = Paciente::orderBy('nome')->get();
 
@@ -46,19 +46,32 @@ Route::get('/pacientes', function () {
     ]);
 })->name('pacientes.index');
 
-// FORMULÁRIO DE NOVO PACIENTE (a gente monta depois)
+// FORMULÁRIO DE NOVO PACIENTE
 Route::get('/pacientes/novo', function () {
     return Inertia::render('Pacientes/Create');
 })->name('pacientes.create');
 
-// EDITAR PACIENTE – carrega dados do banco
+// SALVAR NOVO PACIENTE (CADASTRO)
+Route::post('/pacientes', function (Request $request) {
+    $dados = $request->validate([
+        'nome'      => ['required', 'string', 'max:255'],
+        'telefone'  => ['nullable', 'string', 'max:50'],
+        'documento' => ['nullable', 'string', 'max:50'],
+    ]);
+
+    Paciente::create($dados);
+
+    return redirect()->route('pacientes.index');
+})->name('pacientes.store');
+
+// EDITAR PACIENTE (form)
 Route::get('/pacientes/{paciente}/editar', function (Paciente $paciente) {
     return Inertia::render('Pacientes/Edit', [
         'paciente' => $paciente,
     ]);
 })->name('pacientes.edit');
 
-// ATUALIZAR PACIENTE (recebe o PUT da tela de edição)
+// ATUALIZAR PACIENTE
 Route::put('/pacientes/{paciente}', function (Request $request, Paciente $paciente) {
     $dados = $request->validate([
         'nome'      => ['required', 'string', 'max:255'],

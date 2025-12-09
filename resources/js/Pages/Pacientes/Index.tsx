@@ -25,8 +25,7 @@ export default function PacientesIndex() {
           {/* Link para o formulário de novo paciente */}
           <Link
             href="/pacientes/novo"
-            className="px-4 py-2 rounded-md bg-emerald-600 text-white text-sm hover:bg-emerald-700"
-          >
+            className="px-4 py-2 rounded-md bg-emerald-600 text-white text-sm hover:bg-emerald-700">
             Novo paciente
           </Link>
         </div>
