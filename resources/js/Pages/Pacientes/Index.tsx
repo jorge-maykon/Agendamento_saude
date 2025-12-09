@@ -1,8 +1,17 @@
 import React from 'react';
-import { Head, usePage, Link } from '@inertiajs/react';
+import { Head, usePage, Link, router } from '@inertiajs/react';
 import Layout from '@/Components/Layout';
 
 export default function PacientesIndex() {
+
+  function handleDelete(id: number) {
+    if (!confirm('Tem certeza que deseja excluir este paciente?')) {
+      return;
+    }
+
+    router.delete(`/pacientes/${id}`);
+  }
+
   // pega os dados vindos do Laravel
   const { pacientes = [] } = usePage().props as any;
 
@@ -25,8 +34,7 @@ export default function PacientesIndex() {
           {/* Link para o formulário de novo paciente */}
           <Link
             href="/pacientes/novo"
-            className="px-4 py-2 rounded-md bg-emerald-600 text-white text-sm hover:bg-emerald-700"
-          >
+            className="px-4 py-2 rounded-md bg-emerald-600 text-white text-sm hover:bg-emerald-700">
             Novo paciente
           </Link>
         </div>
@@ -58,8 +66,7 @@ export default function PacientesIndex() {
                 <tr>
                   <td
                     colSpan={5}
-                    className="px-4 py-6 text-center text-slate-500"
-                  >
+                    className="px-4 py-6 text-center text-slate-500">
                     Nenhum paciente cadastrado.
                   </td>
                 </tr>
@@ -76,12 +83,21 @@ export default function PacientesIndex() {
                     {paciente.documento}
                   </td>
                   <td className="px-4 py-2 text-slate-700">
-                    <Link
-                      href={`/pacientes/${paciente.id}/editar`}
-                      className="text-emerald-700 hover:underline text-xs"
-                    >
-                      Editar
-                    </Link>
+                    <div className="flex gap-3">
+                      <Link
+                        href={`/pacientes/${paciente.id}/editar`}
+                        className=" text-emerald-700 hover:underline text-xs"
+                      >
+                        Editar
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(paciente.id)}
+                        className=" text-red-600 hover:underline text-xs"
+                      >
+                        Excluir
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
