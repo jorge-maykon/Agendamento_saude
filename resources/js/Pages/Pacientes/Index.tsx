@@ -83,22 +83,42 @@ export default function PacientesIndex() {
                     {paciente.documento}
                   </td>
                   <td className="px-4 py-2 text-slate-700">
-                    <div className="flex gap-3">
-                      <Link
-                        href={`/pacientes/${paciente.id}/editar`}
-                        className=" text-emerald-700 hover:underline text-xs"
-                      >
-                        Editar
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(paciente.id)}
-                        className=" text-red-600 hover:underline text-xs"
-                      >
-                        Excluir
-                      </button>
-                    </div>
-                  </td>
+  <div className="flex gap-2">
+
+    {/* EDITAR */}
+    <Link
+      href={`/pacientes/${paciente.id}/editar`}
+      className="
+        inline-flex items-center
+        px-2 py-1 text-xs font-medium
+        text-emerald-700 bg-emerald-50
+        border border-emerald-200 rounded-md
+        hover:bg-emerald-100 hover:text-emerald-800
+        transition
+      "
+    >
+      Editar
+    </Link>
+
+    {/* EXCLUIR */}
+    <button
+      type="button"
+      onClick={() => handleDelete(paciente.id)}
+      className="
+        inline-flex items-center
+        px-2 py-1 text-xs font-medium
+        text-red-700 bg-red-50
+        border border-red-200 rounded-md
+        hover:bg-red-100 hover:text-red-800
+        transition
+      "
+    >
+      Excluir
+    </button>
+
+  </div>
+</td>
+
                 </tr>
               ))}
             </tbody>
