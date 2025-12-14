@@ -4,6 +4,7 @@ use App\models\Paciente;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\Servico;
 
 // Rota raiz – pode mandar pra login ou dashboard
 Route::get('/', function () {
@@ -90,6 +91,20 @@ Route::delete('/pacientes/{paciente}', function (Paciente $paciente) {
 
     return redirect()->route('pacientes.index');
 })->name('pacientes.destroy');
+
+// LISTA DE SERVIÇOS – por enquanto dados fixos
+Route::get('/servicos', function () {
+    $servicos = [
+        ['id' => 1, 'nome' => 'Consulta geral',        'preco' => 150.00, 'duracao' => '30 min'],
+        ['id' => 2, 'nome' => 'Retorno',               'preco' =>  80.00, 'duracao' => '20 min'],
+        ['id' => 3, 'nome' => 'Limpeza dentária',      'preco' => 220.00, 'duracao' => '45 min'],
+        ['id' => 4, 'nome' => 'Avaliação especializada','preco' => 250.00,'duracao' => '40 min'],
+    ];
+
+    return Inertia::render('Servicos/Index', [
+        'servicos' => $servicos,
+    ]);
+})->name('servicos.index');
 
 
 

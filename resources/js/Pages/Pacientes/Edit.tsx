@@ -45,7 +45,12 @@ export default function PacientesEdit() {
 
           <Link
             href="/pacientes"
-            className="text-sm text-slate-600 hover:underline"
+            className="inline-flex items-center
+                        px-2 py-1 text-xs font-medium
+                        text-emerald-700 bg-emerald-50
+                        border border-emerald-200 rounded-md
+                        hover:bg-emerald-100 hover:text-emerald-800
+                        transition"
           >
             Voltar para a lista
           </Link>
