@@ -63,20 +63,20 @@ export default function Index() {
                                     {servico.duracao}
                                 </td>
                                 <td className="px-4 py-2 text-right space-x-2">
-                                    <button
-                                        type="button"
-                                        className="text-emerald-700 text-xs hover:underline"
-                                    >
-                                        Editar
-                                    </button>
+                                <Link
+                                    href={route('servicos.edit', servico.id)}
+                                    className="text-emerald-700 text-xs hover:underline"
+                                >
+                                    Editar
+                                </Link>
 
-                                    <button
-                                        type="button"
-                                        className="text-red-600 text-xs hover:underline"
-                                    >
-                                        Excluir
-                                    </button>
-                                </td>
+                                <button
+                                    type="button"
+                                    className="text-red-600 text-xs hover:underline"
+                                >
+                                    Excluir
+                                </button>
+                            </td>
                             </tr>
                         ))}
 

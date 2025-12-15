@@ -3,21 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
-class Servico extends Model
-{
-    //
-}
-<?php
-
-namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Servico extends Model
 {
-    use HasFactory;
+   use HasFactory;
 
     protected $fillable = [
         'nome',
@@ -25,4 +15,7 @@ class Servico extends Model
         'preco',
         'duracao_minutos',
     ];
+
 }
+
+

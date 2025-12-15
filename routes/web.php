@@ -92,20 +92,51 @@ Route::delete('/pacientes/{paciente}', function (Paciente $paciente) {
     return redirect()->route('pacientes.index');
 })->name('pacientes.destroy');
 
-// LISTA DE SERVIÇOS – por enquanto dados fixos
+// LISTA DE SERVIÇOS - vindo do banco
 Route::get('/servicos', function () {
-    $servicos = [
-        ['id' => 1, 'nome' => 'Consulta geral',        'preco' => 150.00, 'duracao' => '30 min'],
-        ['id' => 2, 'nome' => 'Retorno',               'preco' =>  80.00, 'duracao' => '20 min'],
-        ['id' => 3, 'nome' => 'Limpeza dentária',      'preco' => 220.00, 'duracao' => '45 min'],
-        ['id' => 4, 'nome' => 'Avaliação especializada','preco' => 250.00,'duracao' => '40 min'],
-    ];
+    $servicos = Servico::orderBy('nome')->get();
 
     return Inertia::render('Servicos/Index', [
         'servicos' => $servicos,
     ]);
 })->name('servicos.index');
 
+// FORMULÁRIO DE NOVO SERVIÇO (GET)
+Route::get('/servicos/novo', function () {
+    return Inertia::render('Servicos/Create');
+})->name('servicos.create');
 
+// SALVAR NOVO SERVIÇO (POST)
+Route::post('/servicos', function (Request $request) {
+    $dados = $request->validate([
+        'nome'            => ['required', 'string', 'max:255'],
+        'descricao'       => ['nullable', 'string'],
+        'preco'           => ['required', 'numeric', 'min:0'],
+        'duracao_minutos' => ['nullable', 'integer', 'min:1'],
+    ]);
 
+    Servico::create($dados);
 
+    return redirect()->route('servicos.index');
+})->name('servicos.store');
+
+// FORMULÁRIO DE EDIÇÃO DE SERVIÇO (GET)
+Route::get('/servicos/{servico}/editar', function (Servico $servico) {
+    return Inertia::render('Servicos/Edit', [
+        'servico' => $servico,
+    ]);
+})->name('servicos.edit');
+
+// ATUALIZAR SERVIÇO (PUT)
+Route::put('/servicos/{servico}', function (Request $request, Servico $servico) {
+    $dados = $request->validate([
+        'nome'            => ['required', 'string', 'max:255'],
+        'descricao'       => ['nullable', 'string'],
+        'preco'           => ['required', 'numeric', 'min:0'],
+        'duracao_minutos' => ['nullable', 'integer', 'min:1'],
+    ]);
+
+    $servico->update($dados);
+
+    return redirect()->route('servicos.index');
+})->name('servicos.update');

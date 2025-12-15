@@ -4,15 +4,11 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+public function run(): void
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        $this->call([
-            PacienteSeeder::class,
-        ]);
-    }
+    $this->call([
+        ServicoSeeder::class,
+        // PacienteSeeder::class, etc...
+    ]);
 }
+
