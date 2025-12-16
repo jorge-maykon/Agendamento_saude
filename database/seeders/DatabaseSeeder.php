@@ -8,7 +8,7 @@ public function run(): void
 {
     $this->call([
         ServicoSeeder::class,
-        // PacienteSeeder::class, etc...
+        // PacienteSeeder::class,
     ]);
 }
 

@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('servicos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('descricao');
-            $table->string('preco');
-            $table->timestamps('duracao_minutos');
+            $table->text('descricao')->nullable();
+            $table->decimal('preco', 8, 2);
+            $table->unsignedInteger('duracao_minutos')->nullable();
+            $table->timestamps();
         });
     }
 
