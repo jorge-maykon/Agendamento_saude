@@ -10,7 +10,6 @@ export default function Sidebar() {
                 <a href="/servicos" className="block hover:text-yellow-400">Serviços</a>
                 <a href="/agendamentos" className="block hover:text-yellow-400">Agendamentos</a>
             </nav>
-
         </div>
     );
 }

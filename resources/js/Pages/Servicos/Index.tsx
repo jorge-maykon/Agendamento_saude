@@ -17,6 +17,11 @@ export default function ServicosIndex() {
     const { props } = usePage<PageProps>();
     const servicos = props.servicos ?? [];
 
+    export default function Index() {
+    const { props } = usePage<PageProps>();
+    const servicos = props.servicos ?? [];
+
+
     return (
         <div className="p-6">
             {/* CABEÇALHO DA LISTA */}
@@ -26,23 +31,13 @@ export default function ServicosIndex() {
                 </h1>
 
                 <Link
-                    href="/servicos/novo"
+                    href="/servicos/Create"
                     className="inline-flex items-center rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1"
                 >
                     + Novo serviço
                 </Link>
             </div>
 
-            {/* AQUI FICA SUA TABELA DE SERVIÇOS */}
-            {/* ... tabela usando 'servicos' ... */}
-        </div>
-    );
-}
-
-
-export default function Index() {
-    const { props } = usePage<PageProps>();
-    const servicos = props.servicos ?? [];
 
     return (
         <Layout title="Serviços">
@@ -112,8 +107,7 @@ export default function Index() {
                             <tr>
                                 <td
                                     colSpan={5}
-                                    className="px-4 py-6 text-center text-slate-400 text-sm"
-                                >
+                                    className="px-4 py-6 text-center text-slate-400 text-sm">
                                     Nenhum serviço cadastrado.
                                 </td>
                             </tr>
@@ -124,3 +118,9 @@ export default function Index() {
         </Layout>
     );
 }
+        </div>
+    );
+}
+
+
+
