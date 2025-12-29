@@ -37,6 +37,11 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
+// AGENDA / CALENDÁRIO
+Route::get('/agenda', function () {
+    return Inertia::render('Agendamentos/Calendar');
+})->name('agenda.index');
+
 // LISTA DE PACIENTES
 Route::get('/pacientes', function () {
     $pacientes = Paciente::orderBy('nome')->paginate(10); // 10 por página

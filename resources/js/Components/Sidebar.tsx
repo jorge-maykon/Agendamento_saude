@@ -8,7 +8,7 @@ export default function Sidebar() {
                 <a href="/dashboard" className="block hover:text-yellow-400">Home</a>
                 <a href="/pacientes" className="block hover:text-yellow-400">Pacientes</a>
                 <a href="/servicos" className="block hover:text-yellow-400">Serviços</a>
-                <a href="/agendamentos" className="block hover:text-yellow-400">Agendamentos</a>
+                <a href="/agenda" className="block hover:text-yellow-400">Agendamentos</a>
             </nav>
         </div>
     );
