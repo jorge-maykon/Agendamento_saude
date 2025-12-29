@@ -6,9 +6,8 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Servico;
 
-// Rota raiz – pode mandar pra login ou dashboard
 Route::get('/', function () {
-    return redirect()->route('dashboard'); // se preferir login, troque para 'login'
+    return redirect()->route('login'); // se preferir login, troque para 'login'
 });
 
 // Tela de login (GET)
@@ -92,7 +91,12 @@ Route::delete('/pacientes/{paciente}', function (Paciente $paciente) {
     return redirect()->route('pacientes.index');
 })->name('pacientes.destroy');
 
-// LISTA DE SERVIÇOS - vindo do banco
+//TELA DE SERVIÇO
+// =====================
+// SERVIÇOS
+// =====================
+
+// LISTA DE SERVIÇOS
 Route::get('/servicos', function () {
     $servicos = Servico::orderBy('nome')->get();
 
@@ -120,14 +124,14 @@ Route::post('/servicos', function (Request $request) {
     return redirect()->route('servicos.index');
 })->name('servicos.store');
 
-// FORMULÁRIO DE EDIÇÃO DE SERVIÇO (GET)
+// EDITAR SERVIÇO (form)
 Route::get('/servicos/{servico}/editar', function (Servico $servico) {
     return Inertia::render('Servicos/Edit', [
         'servico' => $servico,
     ]);
 })->name('servicos.edit');
 
-// ATUALIZAR SERVIÇO (PUT)
+// ATUALIZAR SERVIÇO
 Route::put('/servicos/{servico}', function (Request $request, Servico $servico) {
     $dados = $request->validate([
         'nome'            => ['required', 'string', 'max:255'],
@@ -140,3 +144,10 @@ Route::put('/servicos/{servico}', function (Request $request, Servico $servico) 
 
     return redirect()->route('servicos.index');
 })->name('servicos.update');
+
+// EXCLUIR SERVIÇO
+Route::delete('/servicos/{servico}', function (Servico $servico) {
+    $servico->delete();
+
+    return redirect()->route('servicos.index');
+})->name('servicos.destroy');
