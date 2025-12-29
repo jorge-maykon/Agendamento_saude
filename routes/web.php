@@ -39,7 +39,7 @@ Route::get('/dashboard', function () {
 
 // LISTA DE PACIENTES
 Route::get('/pacientes', function () {
-    $pacientes = Paciente::orderBy('nome')->get();
+    $pacientes = Paciente::orderBy('nome')->paginate(10); // 10 por página
 
     return Inertia::render('Pacientes/Index', [
         'pacientes' => $pacientes,
