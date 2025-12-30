@@ -1,6 +1,6 @@
 <?php
 
-use App\models\Paciente;
+use App\Models\Paciente;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -103,7 +103,9 @@ Route::delete('/pacientes/{paciente}', function (Paciente $paciente) {
 
 // LISTA DE SERVIÇOS
 Route::get('/servicos', function () {
-    $servicos = Servico::orderBy('nome')->get();
+    $servicos = Servico::orderBy('nome')
+        ->paginate(10)          // 10 por página (pode mudar)
+        ->withQueryString();    // mantém query string na navegação
 
     return Inertia::render('Servicos/Index', [
         'servicos' => $servicos,
