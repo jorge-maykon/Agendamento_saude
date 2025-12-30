@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Servico;
+use App\Models\Agendamento;
 
 Route::get('/', function () {
     return redirect()->route('login'); // se preferir login, troque para 'login'
@@ -158,3 +159,55 @@ Route::delete('/servicos/{servico}', function (Servico $servico) {
 
     return redirect()->route('servicos.index');
 })->name('servicos.destroy');
+
+// =====================
+// AGENDAMENTOS
+// =====================
+
+// LISTA DE AGENDAMENTOS
+Route::get('/agendamentos', function () {
+    $agendamentos = Agendamento::with(['paciente', 'servico'])
+        ->orderBy('data')
+        ->orderBy('hora_inicio')
+        ->get();
+
+    return Inertia::render('Agendamentos/Index', [
+        'agendamentos' => $agendamentos,
+    ]);
+})->name('agendamentos.index');
+
+
+// FORMULÁRIO DE NOVO AGENDAMENTO
+Route::get('/agendamentos/novo', function () {
+    $pacientes = Paciente::orderBy('nome')->get(['id', 'nome']);
+    $servicos  = Servico::orderBy('nome')->get(['id', 'nome']);
+
+    return Inertia::render('Agendamentos/Create', [
+        'pacientes' => $pacientes,
+        'servicos'  => $servicos,
+    ]);
+})->name('agendamentos.create');
+
+
+// SALVAR NOVO AGENDAMENTO
+Route::post('/agendamentos', function (Request $request) {
+    $dados = $request->validate([
+        'paciente_id'  => ['required', 'exists:pacientes,id'],
+        'servico_id'   => ['required', 'exists:servicos,id'],
+        'data'         => ['required', 'date'],
+        'hora_inicio'  => ['required'],
+        'hora_fim'     => ['nullable'],
+        'observacao'   => ['nullable', 'string'],
+        'status'       => ['nullable', 'string'],
+    ]);
+
+    // status padrão
+    if (empty($dados['status'])) {
+        $dados['status'] = 'agendado';
+    }
+
+    Agendamento::create($dados);
+
+    return redirect()->route('agendamentos.index');
+})->name('agendamentos.store');
+

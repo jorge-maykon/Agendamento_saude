@@ -16,6 +16,14 @@ class Servico extends Model
         'duracao_minutos',
     ];
 
+    // app/Models/Servico.php
+
+public function agendamentos()
+{
+    return $this->hasMany(Agendamento::class);
+}
+
+
 }
 
 

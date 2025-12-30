@@ -14,4 +14,9 @@ class Paciente extends Model
         'telefone',
         'documento',
     ];
+
+    public function agendamentos()
+{
+    return $this->hasMany(Agendamento::class);
+}
 }
