@@ -1,5 +1,5 @@
 import Layout from '@/Components/Layout';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 
 type Servico = {
     id: number;
@@ -21,6 +21,16 @@ type PageProps = {
         links: PaginationLink[];
     };
 };
+
+function handleDelete(id: number) {
+    if (!confirm('Tem certeza que deseja excluir este serviço?')) {
+        return;
+    }
+
+    router.delete(`/servicos/${id}`, {
+        preserveScroll: true,
+    });
+}
 
 export default function ServicosIndex() {
     const { servicos } = usePage<PageProps>().props;
@@ -71,8 +81,8 @@ export default function ServicosIndex() {
 
                                         <button
                                             type="button"
+                                            onClick={() => handleDelete(servico.id)}
                                             className="text-xs text-red-600 hover:underline"
-                                            // depois conectamos com delete de fato
                                         >
                                             Excluir
                                         </button>
