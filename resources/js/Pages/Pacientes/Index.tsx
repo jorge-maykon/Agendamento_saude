@@ -72,6 +72,13 @@ export default function PacientesIndex() {
                                     <td className="px-4 py-2 text-slate-700">{paciente.telefone || '—'}</td>
                                     <td className="px-4 py-2 text-slate-700">{paciente.documento || '—'}</td>
                                     <td className="space-x-3 px-4 py-2 text-right">
+                                        <Link
+                                            href={route('agendamentos.create', { paciente_id: paciente.id })}
+                                            className="text-xs text-emerald-700 hover:underline"
+                                        >
+                                            Agendar
+                                        </Link>
+
                                         <Link href={`/pacientes/${paciente.id}/editar`} className="text-xs text-emerald-700 hover:underline">
                                             Editar
                                         </Link>

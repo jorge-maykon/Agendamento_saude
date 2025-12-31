@@ -178,15 +178,18 @@ Route::get('/agendamentos', function () {
 
 
 // FORMULÁRIO DE NOVO AGENDAMENTO
-Route::get('/agendamentos/novo', function () {
+Route::get('/agendamentos/novo', function (Request $request) {
     $pacientes = Paciente::orderBy('nome')->get(['id', 'nome']);
     $servicos  = Servico::orderBy('nome')->get(['id', 'nome']);
 
     return Inertia::render('Agendamentos/Create', [
-        'pacientes' => $pacientes,
-        'servicos'  => $servicos,
+        'pacientes'          => $pacientes,
+        'servicos'           => $servicos,
+        'defaultPacienteId'  => $request->query('paciente_id'),
+        'defaultServicoId'   => $request->query('servico_id'),
     ]);
 })->name('agendamentos.create');
+
 
 
 // SALVAR NOVO AGENDAMENTO
