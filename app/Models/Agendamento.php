@@ -4,17 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-// app/Models/Agendamento.php
 class Agendamento extends Model
 {
     protected $fillable = [
         'paciente_id',
-        'servico_id',
         'data',
         'hora_inicio',
-        'duracao_minutos',
+        'hora_fim',
         'status',
-        'observacoes',
+        'observacao',
     ];
 
     public function paciente()
@@ -22,9 +20,8 @@ class Agendamento extends Model
         return $this->belongsTo(Paciente::class);
     }
 
-    public function servico()
+    public function servicos()
     {
-        return $this->belongsTo(Servico::class);
+        return $this->belongsToMany(Servico::class, 'agendamento_servico');
     }
 }
-

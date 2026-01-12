@@ -21,7 +21,7 @@ export default function AgendamentosIndex() {
     const { agendamentos = [] } = usePage<PageProps>().props;
 
     return (
-        <Layout title="Agenda">
+        <Layout title="Agendamentos">
             {/* Cabeçalho */}
             <div className="flex items-center justify-between mb-6">
                 <h1 className="text-2xl font-semibold text-slate-800">
@@ -32,7 +32,7 @@ export default function AgendamentosIndex() {
                     href={route('agendamentos.create')}
                     className="inline-flex items-center px-4 py-2 rounded-md bg-emerald-600 text-sm font-medium text-white hover:bg-emerald-700"
                 >
-                    + Novo agendamento
+                     Novo agendamento
                 </Link>
             </div>
 

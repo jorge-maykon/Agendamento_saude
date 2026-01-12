@@ -1,0 +1,21 @@
+version: ''
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - .:/var/www
+    ports:
+      - "8000:8000"
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  node:
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    volumes:
+      - .:/var/www
+    ports:
+      - "5173:5173"

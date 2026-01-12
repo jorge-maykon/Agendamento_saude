@@ -6,6 +6,12 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Servico;
 use App\Models\Agendamento;
+use Carbon\Carbon;
+
+Route::post('/agendamentos', function (Request $request) {
+    dd('CHEGOU AQUI');
+});
+
 
 Route::get('/', function () {
     return redirect()->route('login'); // se preferir login, troque para 'login'
@@ -40,8 +46,14 @@ Route::get('/dashboard', function () {
 
 // AGENDA / CALENDÁRIO
 Route::get('/agenda', function () {
-    return Inertia::render('Agendamentos/Calendar');
+    $agendamentos = Agendamento::with(['paciente', 'servicos'])->get();
+
+
+    return Inertia::render('Agendamentos/Calendar', [
+        'agendamentos' => $agendamentos,
+    ]);
 })->name('agenda.index');
+
 
 // LISTA DE PACIENTES
 Route::get('/pacientes', function () {
@@ -178,39 +190,45 @@ Route::get('/agendamentos', function () {
 
 
 // FORMULÁRIO DE NOVO AGENDAMENTO
-Route::get('/agendamentos/novo', function (Request $request) {
-    $pacientes = Paciente::orderBy('nome')->get(['id', 'nome']);
-    $servicos  = Servico::orderBy('nome')->get(['id', 'nome']);
-
+Route::get('/agendamentos/novo', function () {
     return Inertia::render('Agendamentos/Create', [
-        'pacientes'          => $pacientes,
-        'servicos'           => $servicos,
-        'defaultPacienteId'  => $request->query('paciente_id'),
-        'defaultServicoId'   => $request->query('servico_id'),
+        'pacientes' => Paciente::orderBy('nome')->get(['id', 'nome']),
+        'servicos' => Servico::orderBy('nome')->get(['id', 'nome', 'duracao_minutos']),
     ]);
-})->name('agendamentos.create');
+})->name('atendimentos.create');
 
 
 
 // SALVAR NOVO AGENDAMENTO
 Route::post('/agendamentos', function (Request $request) {
+
     $dados = $request->validate([
-        'paciente_id'  => ['required', 'exists:pacientes,id'],
-        'servico_id'   => ['required', 'exists:servicos,id'],
-        'data'         => ['required', 'date'],
-        'hora_inicio'  => ['required'],
-        'hora_fim'     => ['nullable'],
-        'observacao'   => ['nullable', 'string'],
-        'status'       => ['nullable', 'string'],
+        'paciente_id' => ['required', 'exists:pacientes,id'],
+        'data'        => ['required', 'date'],
+        'hora_inicio' => ['required', 'date_format:H:i'],
+        'servicos'    => ['required', 'array'],
+        'servicos.*'  => ['exists:servicos,id'],
+        'observacao'  => ['nullable', 'string'],
     ]);
 
-    // status padrão
-    if (empty($dados['status'])) {
-        $dados['status'] = 'agendado';
-    }
+    // 🔹 calcular duração total
+    $duracaoTotal = Servico::whereIn('id', $dados['servicos'])
+        ->sum('duracao_minutos');
 
-    Agendamento::create($dados);
+    $horaInicio = Carbon::createFromFormat('H:i', $dados['hora_inicio']);
+    $horaFim = $horaInicio->copy()->addMinutes($duracaoTotal);
 
-    return redirect()->route('agendamentos.index');
-})->name('agendamentos.store');
+    $agendamento = Agendamento::create([
+        'paciente_id' => $dados['paciente_id'],
+        'data'        => $dados['data'],
+        'hora_inicio' => $horaInicio->format('H:i'),
+        'hora_fim'    => $horaFim->format('H:i'),
+        'status'      => 'agendado',
+        'observacao'  => $dados['observacao'] ?? null,
+    ]);
 
+    // 🔥 pivot
+    $agendamento->servicos()->attach($dados['servicos']);
+
+    return redirect()->route('agenda.index');
+});
