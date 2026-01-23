@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Paciente;
+use App\Models\Servico;
 
 class Agendamento extends Model
 {
@@ -22,6 +24,6 @@ class Agendamento extends Model
 
     public function servicos()
     {
-        return $this->belongsToMany(Servico::class, 'agendamento_servico');
+        return $this->belongsToMany(Servico::class);
     }
 }

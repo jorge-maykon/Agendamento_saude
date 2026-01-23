@@ -8,14 +8,27 @@ use App\Models\Servico;
 use App\Models\Agendamento;
 use Carbon\Carbon;
 
+use App\Http\Controllers\AgendamentoController;
+
 Route::post('/agendamentos', function (Request $request) {
     dd('CHEGOU AQUI');
 });
+
+Route::delete('/agendamentos/{agendamento}', [AgendamentoController::class, 'destroy'])
+    ->name('agendamentos.destroy');
 
 
 Route::get('/', function () {
     return redirect()->route('login'); // se preferir login, troque para 'login'
 });
+
+//Editar agendamento 
+Route::get('/agendamentos/{agendamento}/edit', [AgendamentoController::class, 'edit'])
+    ->name('agendamentos.edit');
+
+Route::put('/agendamentos/{agendamento}', [AgendamentoController::class, 'update'])
+    ->name('agendamentos.update');
+
 
 // Tela de login (GET)
 Route::get('/login', function () {
@@ -48,11 +61,10 @@ Route::get('/dashboard', function () {
 Route::get('/agenda', function () {
     $agendamentos = Agendamento::with(['paciente', 'servicos'])->get();
 
-
     return Inertia::render('Agendamentos/Calendar', [
         'agendamentos' => $agendamentos,
     ]);
-})->name('agenda.index');
+});
 
 
 // LISTA DE PACIENTES
@@ -178,7 +190,7 @@ Route::delete('/servicos/{servico}', function (Servico $servico) {
 
 // LISTA DE AGENDAMENTOS
 Route::get('/agendamentos', function () {
-    $agendamentos = Agendamento::with(['paciente', 'servico'])
+    $agendamentos = Agendamento::with(['paciente', 'servicos'])
         ->orderBy('data')
         ->orderBy('hora_inicio')
         ->get();
@@ -226,6 +238,14 @@ Route::post('/agendamentos', function (Request $request) {
         'status'      => 'agendado',
         'observacao'  => $dados['observacao'] ?? null,
     ]);
+
+    //Exclusão de agendamentos
+Route::delete('/agendamentos/{agendamento}', function (Agendamento $agendamento) {
+    $agendamento->delete();
+
+    return redirect()->back()->with('success', 'Agendamento excluído');
+})->name('agendamentos.destroy');
+
 
     // 🔥 pivot
     $agendamento->servicos()->attach($dados['servicos']);

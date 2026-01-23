@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import Layout from '@/Components/Layout';
+import AgendamentoModal from '@/Components/AgendamentoModal';
 
 const weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 
@@ -16,9 +17,14 @@ type Agendamento = {
   data: string;
   hora_inicio: string;
   hora_fim: string;
+  observacao?: string;
   paciente: {
     nome: string;
   };
+  servicos: {
+    id: number;
+    nome: string;
+  }[];
 };
 
 type Props = {
@@ -28,6 +34,9 @@ type Props = {
 export default function CalendarPage({ agendamentos = [] }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [agendamentoSelecionado, setAgendamentoSelecionado] =
+  useState<Agendamento | null>(null);
+
 
   useEffect(() => {
     if (agendamentos.length > 0) {
@@ -177,9 +186,26 @@ export default function CalendarPage({ agendamentos = [] }: Props) {
               agendamentosPorDia[
                 `${year}-${String(month + 1).padStart(2, '0')}-${String(selectedDayNumber).padStart(2, '0')}`
               ].map(ag => (
-                <div key={ag.id}>
-                  <strong>{ag.hora_inicio}</strong> — {ag.paciente.nome}
-                </div>
+                <button
+                  key={ag.id}
+                  onClick={() => setAgendamentoSelecionado(ag)}
+                  className="
+                    w-60 text-left rounded-lg border border-slate-200 p-3
+                    hover:border-emerald-400 hover:bg-emerald-50
+                    transition flex flex-col gap-1
+                  "
+                >
+                  <span className="text-sm font-semibold text-slate-800">
+                    {ag.hora_inicio} – {ag.hora_fim}
+                  </span>
+S
+                  <span className="text-sm text-slate-600">
+                    {ag.paciente.nome}
+                  </span>
+
+                  {/* espaço futuro */}
+                  {/* <span className="text-xs text-slate-400">Corte Masculino</span> */}
+                </button>
               ))
             ) : (
               <p>Nenhum agendamento para este dia.</p>
@@ -187,9 +213,18 @@ export default function CalendarPage({ agendamentos = [] }: Props) {
           ) : (
             <p>Selecione um dia no calendário.</p>
           )}
+
+          
         </div>
 
       </div>
+{agendamentoSelecionado && (
+  <AgendamentoModal
+    agendamento={agendamentoSelecionado}
+    onClose={() => setAgendamentoSelecionado(null)}
+  />
+)}
+
     </Layout>
   );
 }
