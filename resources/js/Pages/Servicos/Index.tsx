@@ -76,7 +76,7 @@ export default function ServicosIndex() {
                                     <td className="px-4 py-2 text-slate-700">{servico.duracao_minutos ?? '-'}</td>
                                     <td className="space-x-2 px-4 py-2 text-right">
                                         <Link
-                                            href={route('agendamentos.create', { servico_id: servico.id })}
+                                            href={`/agendamentos/novo?servico_id=${servico.id}`}
                                             className="text-xs text-emerald-700 hover:underline"
                                         >
                                             Agendar

@@ -22,6 +22,68 @@ export default function AgendamentosIndex() {
 
     return (
         <Layout title="Agenda">
+            {/* CONTAINER CENTRALIZADO E COM LARGURA MÁXIMA */}
+            <div className="max-w-5xl mx-auto px-4 py-6">
+                {/* CARD DO CALENDÁRIO */}
+                <div className="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 overflow-x-auto">
+                    {/* Cabeçalho do mês + navegação */}
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200">
+                        {/* ... título do mês e botões anterior/próximo ... */}
+                    </div>
+
+                    {/* GRID DO CALENDÁRIO */}
+                    <div className="p-4 min-w-[700px]">
+                        {/* dias da semana */}
+                        <div className="grid grid-cols-7 gap-3 mb-2 text-xs font-medium text-slate-500 text-center">
+                            <span>Dom</span>
+                            <span>Seg</span>
+                            <span>Ter</span>
+                            <span>Qua</span>
+                            <span>Qui</span>
+                            <span>Sex</span>
+                            <span>Sáb</span>
+                        </div>
+
+                        {/* dias do mês */}
+                        <div className="grid grid-cols-7 gap-3">
+                            {/* aqui vão os botões/dias */}
+                            {/* cada dia algo como: */}
+                            {/* 
+                            <button
+                                key={dia}
+                                className="aspect-square w-full rounded-lg border text-sm flex items-center justify-center hover:border-emerald-500 hover:text-emerald-600"
+                            >
+                                {dia}
+                            </button> 
+                            */}
+                        </div>
+                    </div>
+                </div>
+
+                {/* LISTA “AGENDAMENTOS DO DIA” */}
+                <div className="bg-white rounded-xl shadow-sm border border-slate-200">
+                    <div className="px-4 py-3 border-b border-slate-200">
+                        <h2 className="text-sm font-medium text-slate-700">
+                            Agendamentos do dia
+                        </h2>
+                    </div>
+
+                    <div className="px-4 py-4 text-sm text-slate-500">
+                        Nenhum agendamento cadastrado para 14/01/2026.
+                        <span className="text-slate-400">
+                            {' '}
+                            (Ainda estamos só com a interface; depois vamos ligar com o banco.)
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </Layout>
+    );
+}
+    
+    
+    return (
+        <Layout title="Agenda">
             {/* Cabeçalho */}
             <div className="flex items-center justify-between mb-6">
                 <h1 className="text-2xl font-semibold text-slate-800">
@@ -29,7 +91,8 @@ export default function AgendamentosIndex() {
                 </h1>
 
                 <Link
-                    href={route('agendamentos.create')}
+                    href="/agendamentos/novo"
+
                     className="inline-flex items-center px-4 py-2 rounded-md bg-emerald-600 text-sm font-medium text-white hover:bg-emerald-700"
                 >
                     + Novo agendamento

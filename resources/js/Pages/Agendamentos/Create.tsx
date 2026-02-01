@@ -33,7 +33,8 @@ export default function AgendamentosCreate() {
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        post(route('agendamentos.store'));
+        post('/agendamentos');
+
     }
 
     return (
@@ -45,7 +46,8 @@ export default function AgendamentosCreate() {
                     </h1>
 
                     <Link
-                        href={route('agendamentos.index')}
+                        href="/agendamentos"
+
                         className="text-xs text-slate-500 hover:underline"
                     >
                         Voltar para a agenda
