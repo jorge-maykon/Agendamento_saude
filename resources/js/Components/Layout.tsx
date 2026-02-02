@@ -30,7 +30,9 @@ export default function Layout({ children }: Props) {
         {/* TOPO DA SIDEBAR */}
         <div className="h-14 flex items-center justify-between px-3 border-b border-slate-800">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-slate-700" />
+            <span className="text-xl w-8 h-8 rounded bg-slate-700 flex items-center justify-center">
+                💙
+            </span>
             {!collapsed && <span className="font-semibold">Agendamento</span>}
           </div>
 
