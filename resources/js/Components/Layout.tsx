@@ -5,6 +5,9 @@ type Props = {
   children: React.ReactNode;
 };
 
+export default function Navbar() { ... }
+
+
 export default function Layout({ children }: Props) {
   const [collapsed, setCollapsed] = React.useState(false);
 
