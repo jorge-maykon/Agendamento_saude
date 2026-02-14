@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
+import Navbar from '@/Components/Navbar';
+
 
 type Props = {
   children: React.ReactNode;
 };
-
-export default function Navbar() { ... }
-
 
 export default function Layout({ children }: Props) {
   const [collapsed, setCollapsed] = React.useState(false);
@@ -63,6 +62,10 @@ export default function Layout({ children }: Props) {
       {/* CONTEÚDO */}
       <main className="flex-1 min-w-0">
         {/* Topbar (se quiser) */}
+
+
+        <Navbar />
+
         <div className="h-14 bg-white border-b border-slate-200 flex items-center px-4">
           <span className="text-slate-700">Painel</span>
         </div>
